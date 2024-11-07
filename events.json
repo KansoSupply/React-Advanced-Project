@@ -1,0 +1,109 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Ignacio Doe",
+      "image": "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      "id": 2,
+      "name": "Jane Bennett",
+      "image": "https://images.unsplash.com/photo-1520466809213-7b9a56adcd45?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "createdBy": 1,
+      "title": "Jeep Safari",
+      "description": "Experience thrilling trails and scenic views with a jeep you get to drive yourself.",
+      "image": "https://images.unsplash.com/photo-1721843431268-b8e380c6892f?q=80&w=2027&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "categoryIds": [
+        1
+      ],
+      "location": "Rocky Ridge Trail, National Park",
+      "startTime": "2024-11-06T11:09:00.000Z",
+      "endTime": "2024-11-06T14:09:00.000Z"
+    },
+    {
+      "id": 2,
+      "createdBy": 1,
+      "title": "Wild Water Rafting",
+      "description": "Join us on a wildwater raft through the mountains of Yosemite park. Experience thrill!",
+      "image": "https://images.unsplash.com/photo-1527169765632-ac923c0915fc?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "categoryIds": [
+        2,
+        3
+      ],
+      "location": "White Rapids River, Riverside Park",
+      "startTime": "2024-11-06T11:09:00.000Z",
+      "endTime": "2024-11-06T14:09:00.000Z"
+    },
+    {
+      "id": 3,
+      "createdBy": "2",
+      "title": "Mountain Hiking",
+      "description": "Embark on a thrilling hiking adventure through the mountains of Mongolia",
+      "image": "https://images.unsplash.com/photo-1535189103701-1f52f79823f3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "categoryIds": [
+        3
+      ],
+      "location": "California/Nevada, USA",
+      "startTime": "2024-11-06T11:09:00.000Z",
+      "endTime": "2024-11-06T14:09:00.000Z"
+    },
+    {
+      "id": 4,
+      "createdBy": 2,
+      "title": "Wildlife Photography Walk",
+      "description": "Capture stunning shots of wildlife in their natural habitat with a guided photographer.",
+      "image": "https://images.unsplash.com/photo-1729287331079-af3ad1ba8717?q=80&w=3164&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "categoryIds": [
+        3
+      ],
+      "location": "Willow Creek Reserve",
+      "startTime": "2024-06-30T07:30:00.000Z",
+      "endTime": "2024-06-30T10:30:00.000Z"
+    },
+    {
+      "id": 5,
+      "createdBy": 1,
+      "title": "Stargazing Night",
+      "description": "Enjoy a guided stargazing experience to explore constellations and planets in the night sky.",
+      "image": "https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?q=80&w=3024&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "categoryIds": [
+        2
+      ],
+      "location": "Clearview Hill, Observatory Park",
+      "startTime": "2024-07-12T21:00:00.000Z",
+      "endTime": "2024-07-12T23:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "createdBy": 2,
+      "title": "Bird Watching Expedition",
+      "description": "Join a bird-watching expedition led by a wildlife expert to observe local bird species.",
+      "image": "https://images.unsplash.com/photo-1676969609646-9d4e1b88d3ab?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "categoryIds": [
+        3
+      ],
+      "location": "Marshland Sanctuary, Oakwood Preserve",
+      "startTime": "2024-07-20T06:30:00.000Z",
+      "endTime": "2024-07-20T09:30:00.000Z"
+    }
+  ],
+  "categories": [
+    {
+      "name": "sports",
+      "id": 1
+    },
+    {
+      "name": "nature",
+      "id": 2
+    },
+    {
+      "name": "wildlife",
+      "id": 3
+    }
+  ]
+}
