@@ -24,33 +24,59 @@ import { useLoaderData } from "react-router-dom";
 
 export const EditEventForm = ({ updateEvent, setIsEditing, deleteEvent }) => {
   const { event, user } = useLoaderData();
-  const [title, setTitle] = useState(event.title);
-  const [description, setDescription] = useState(event.description);
-  const [image, setImage] = useState(event.image);
-  const [categoryIds, setCategoryIds] = useState(
-    event.categoryIds.map((id) => id.toString())
-  );
-  const [location, setLocation] = useState(event.location);
-  const [startTime, setStartTime] = useState(event.startTime);
-  const [endTime, setEndTime] = useState(event.endTime);
+
+  const [eventData, setEventData] = useState({
+    title: event.title,
+    description: event.description,
+    image: event.image,
+    location: event.location,
+    categoryIds: event.categoryIds.map((id) => id.toString()),
+    startDate: event.startTime.slice(0, 10),
+    startTime: event.startTime.slice(11, 16),
+    endDate: event.endTime.slice(0, 10),
+    endTime: event.endTime.slice(11, 16),
+  });
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const startDateTime = new Date(
+      `${eventData.startDate}T${eventData.startTime}:00Z`
+    ).toISOString();
+    const endDateTime = new Date(
+      `${eventData.endDate}T${eventData.endTime}:00Z`
+    ).toISOString();
+
     await updateEvent({
       id: event.id,
       createdBy: event.createdBy,
-      title,
-      description,
-      image,
-      categoryIds: categoryIds.map((id) => parseInt(id, 10)),
-      location,
-      startTime: new Date(startTime).toISOString(),
-      endTime: new Date(endTime).toISOString(),
+      title: eventData.title,
+      description: eventData.description,
+      image: eventData.image,
+      categoryIds: eventData.categoryIds.map((id) => parseInt(id, 10)),
+      location: eventData.location,
+      startTime: startDateTime,
+      endTime: endDateTime,
     });
+
     setIsEditing(false);
+  };
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setEventData((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+  };
+
+  const handleCategoryChange = (newCategories) => {
+    setEventData((prevState) => ({
+      ...prevState,
+      categoryIds: newCategories,
+    }));
   };
 
   return (
@@ -75,15 +101,16 @@ export const EditEventForm = ({ updateEvent, setIsEditing, deleteEvent }) => {
           Hi {user.name}! You can edit your event using the form below.
         </Heading>
       </VStack>
+
       <VStack width="100%" align="flex-start">
         <FormLabel>Title</FormLabel>
         <Input
           id="title"
           color="black"
           type="text"
-          value={title}
+          value={eventData.title}
           placeholder="Title"
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={handleChange}
           width="100%"
         />
       </VStack>
@@ -92,9 +119,9 @@ export const EditEventForm = ({ updateEvent, setIsEditing, deleteEvent }) => {
         <FormLabel>Description</FormLabel>
         <Textarea
           id="description"
-          value={description}
+          value={eventData.description}
           placeholder="Description"
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={handleChange}
           width="100%"
         />
       </VStack>
@@ -104,16 +131,19 @@ export const EditEventForm = ({ updateEvent, setIsEditing, deleteEvent }) => {
         <Input
           id="image"
           type="text"
-          value={image}
+          value={eventData.image}
           placeholder="Image URL"
-          onChange={(e) => setImage(e.target.value)}
+          onChange={handleChange}
           width="100%"
         />
       </VStack>
 
       <VStack width="100%" align="flex-start">
         <FormLabel>Category</FormLabel>
-        <CheckboxGroup value={categoryIds} onChange={setCategoryIds}>
+        <CheckboxGroup
+          value={eventData.categoryIds}
+          onChange={handleCategoryChange}
+        >
           <Stack spacing={[1, 5]} direction={["column", "row"]}>
             <Checkbox value="1">Sports</Checkbox>
             <Checkbox value="2">Nature</Checkbox>
@@ -127,34 +157,57 @@ export const EditEventForm = ({ updateEvent, setIsEditing, deleteEvent }) => {
         <Input
           id="location"
           type="text"
-          value={location}
+          value={eventData.location}
           placeholder="Location"
-          onChange={(e) => setLocation(e.target.value)}
+          onChange={handleChange}
           width="100%"
         />
       </VStack>
 
       <VStack width="100%" align="flex-start">
-        <FormLabel>Start Date and Time</FormLabel>
+        <FormLabel>Start Date</FormLabel>
+        <Input
+          id="startDate"
+          type="date"
+          value={eventData.startDate}
+          onChange={handleChange}
+          width="100%"
+        />
+      </VStack>
+
+      <VStack width="100%" align="flex-start">
+        <FormLabel>Start Time</FormLabel>
         <Input
           id="startTime"
-          type="datetime-local"
-          value={startTime}
-          onChange={(e) => setStartTime(e.target.value)}
+          type="time"
+          value={eventData.startTime}
+          onChange={handleChange}
           width="100%"
         />
       </VStack>
 
       <VStack width="100%" align="flex-start">
-        <FormLabel>End Date and Time</FormLabel>
+        <FormLabel>End Date</FormLabel>
         <Input
-          id="endTime"
-          type="datetime-local"
-          value={endTime}
-          onChange={(e) => setEndTime(e.target.value)}
+          id="endDate"
+          type="date"
+          value={eventData.endDate}
+          onChange={handleChange}
           width="100%"
         />
       </VStack>
+
+      <VStack width="100%" align="flex-start">
+        <FormLabel>End Time</FormLabel>
+        <Input
+          id="endTime"
+          type="time"
+          value={eventData.endTime}
+          onChange={handleChange}
+          width="100%"
+        />
+      </VStack>
+
       <HStack gap={4}>
         <Button
           type="submit"
@@ -181,22 +234,22 @@ export const EditEventForm = ({ updateEvent, setIsEditing, deleteEvent }) => {
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Modal Title</ModalHeader>
+            <ModalHeader>Delete Event</ModalHeader>
             <ModalCloseButton />
             <ModalBody>Do you really want to delete the event?</ModalBody>
 
-            <ModalFooter>
+            <ModalFooter gap={3} justifyContent="left">
+              <Button colorScheme="gray" onClick={onClose}>
+                No, go back
+              </Button>
               <Button
-                colorScheme="blue"
+                colorScheme="red"
                 mr={3}
                 onClick={() => {
                   deleteEvent();
                 }}
               >
-                Yes
-              </Button>
-              <Button variant="ghost" onClick={onClose}>
-                No
+                Yes, delete the event
               </Button>
             </ModalFooter>
           </ModalContent>

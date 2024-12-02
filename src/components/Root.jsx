@@ -5,7 +5,7 @@ import { Center } from "@chakra-ui/react";
 
 export const Root = () => {
   return (
-    <Center flexDirection="column" gap={0}>
+    <Center flexDirection="column" gap={0} p={4}>
       <Navigation />
       <Outlet />
     </Center>

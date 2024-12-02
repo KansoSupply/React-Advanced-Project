@@ -8,7 +8,7 @@ export const Navigation = () => {
       <Flex
         gap={6}
         flexDirection="row"
-        maxWidth="1200px" // Limits width to 1200px
+        maxWidth="1200px"
         width="100%"
         h="64px"
         justifyContent="flex-start"

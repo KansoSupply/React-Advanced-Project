@@ -19,9 +19,18 @@ export const EventsPage = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch("http://localhost:3000/events");
-      const json = await response.json();
-      setEvents(json);
+      try {
+        const response = await fetch("http://localhost:3000/events");
+
+        if (response.ok) {
+          const json = await response.json();
+          setEvents(json);
+        } else {
+          throw new Error(`Failed to load events`);
+        }
+      } catch (error) {
+        console.error("Error fetching events", error);
+      }
     }
 
     fetchData();
@@ -45,6 +54,8 @@ export const EventsPage = () => {
       flexDirection="column"
       justify="center"
       height="fit"
+      width="full"
+      maxWidth="1200px"
       gap={20}
       mb={20}
       pt={20}
@@ -57,80 +68,6 @@ export const EventsPage = () => {
       >
         Create Your Next Adventure with Sherpa
       </Heading>
-      <Stack maxWidth="1200px" gap={4}>
-        <HStack justify="space-between" width="full">
-          <HStack>
-            <Tag
-              background="gray.100"
-              color="grey.300"
-              py={2}
-              px={4}
-              borderRadius={32}
-              cursor="pointer"
-              onClick={() => setCategory("")}
-            >
-              All
-            </Tag>
-            <Tag
-              background="gray.100"
-              color="grey.300"
-              py={2}
-              px={4}
-              borderRadius={32}
-              cursor="pointer"
-              onClick={() => setCategory(1)}
-            >
-              Sports
-            </Tag>
-            <Tag
-              background="gray.100"
-              color="grey.300"
-              py={2}
-              px={4}
-              borderRadius={32}
-              cursor="pointer"
-              onClick={() => setCategory(2)}
-            >
-              Nature
-            </Tag>
-            <Tag
-              background="gray.100"
-              color="grey.300"
-              py={2}
-              px={4}
-              borderRadius={32}
-              cursor="pointer"
-              onClick={() => setCategory(3)}
-            >
-              Wildlife
-            </Tag>
-          </HStack>
-          <Input
-            backgroundColor="gray.100"
-            w="300px"
-            variant="filled"
-            _focus={{
-              backgroundColor: "black",
-            }}
-            borderRadius="32px"
-            border="black"
-            placeholder="Search"
-            _placeholder={{ color: "black" }}
-            color="white"
-            onChange={handleChange}
-          ></Input>
-        </HStack>
-        <SimpleGrid
-          columns={[1, 1, 2, 3]}
-          justify="center"
-          spacing="32px"
-          overflow="visible"
-        >
-          {matchedEvents.map((item) => (
-            <EventItem key={item.id} item={item} />
-          ))}
-        </SimpleGrid>
-      </Stack>
       <Button
         onClick={() => navigate("/addevent")}
         bg="black"
@@ -142,6 +79,89 @@ export const EventsPage = () => {
       >
         Add an event
       </Button>
+      <HStack justify="space-between" width="full">
+        <HStack>
+          <Tag
+            background={category === "" ? "black" : "gray.100"}
+            color={category === "" ? "white" : "grey.300"}
+            py={2}
+            px={4}
+            borderRadius={32}
+            cursor="pointer"
+            onClick={() => setCategory("")}
+          >
+            All
+          </Tag>
+          <Tag
+            background={category === 1 ? "black" : "gray.100"}
+            color={category === 1 ? "white" : "grey.300"}
+            py={2}
+            px={4}
+            borderRadius={32}
+            cursor="pointer"
+            onClick={() => setCategory(1)}
+          >
+            Sports
+          </Tag>
+          <Tag
+            background={category === 2 ? "black" : "gray.100"}
+            color={category === 2 ? "white" : "grey.300"}
+            py={2}
+            px={4}
+            borderRadius={32}
+            cursor="pointer"
+            onClick={() => setCategory(2)}
+          >
+            Nature
+          </Tag>
+          <Tag
+            background={category === 3 ? "black" : "gray.100"}
+            color={category === 3 ? "white" : "grey.300"}
+            py={2}
+            px={4}
+            borderRadius={32}
+            cursor="pointer"
+            onClick={() => setCategory(3)}
+          >
+            Wildlife
+          </Tag>
+        </HStack>
+        <Input
+          backgroundColor="gray.100"
+          w="300px"
+          variant="filled"
+          _focus={{
+            backgroundColor: "black",
+          }}
+          borderRadius="32px"
+          border="black"
+          placeholder="Search"
+          _placeholder={{ color: "black" }}
+          color="white"
+          onChange={handleChange}
+        ></Input>
+      </HStack>
+      <Stack maxWidth="1200px" gap={4}>
+        {matchedEvents.length === 0 ? (
+          <Center py={10}>
+            <Heading fontWeight="bold" fontSize="16px">
+              Sorry, we did not find anything with that search criteria. Please
+              try something else.
+            </Heading>
+          </Center>
+        ) : (
+          <SimpleGrid
+            columns={[1, 1, 2, 3]}
+            justify="center"
+            spacing="32px"
+            overflow="visible"
+          >
+            {matchedEvents.map((item) => (
+              <EventItem key={item.id} item={item} />
+            ))}
+          </SimpleGrid>
+        )}
+      </Stack>
     </Center>
   );
 };

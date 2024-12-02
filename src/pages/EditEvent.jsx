@@ -1,17 +1,17 @@
 import { Center } from "@chakra-ui/react";
 import { EditEventForm } from "../components/EditEventForm";
-import { useLoaderData } from "react-router-dom";
+// import { useLoaderData } from "react-router-dom";
 
-export const EditEvent = () => {
-  const { event } = useLoaderData();
+export const EditEvent = (updateEvent) => {
+  // const { event } = useLoaderData();
 
-  const updateEvent = async (updatedEvent) => {
-    await fetch(`http://localhost:3000/events/${event.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json;charset=utf-8" },
-      body: JSON.stringify(updatedEvent),
-    });
-  };
+  // const updateEvent = async (updatedEvent) => {
+  //   await fetch(`http://localhost:3000/events/${event.id}`, {
+  //     method: "PUT",
+  //     headers: { "Content-Type": "application/json;charset=utf-8" },
+  //     body: JSON.stringify(updatedEvent),
+  //   });
+  // };
 
   return (
     <>
